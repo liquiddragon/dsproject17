@@ -7,3 +7,11 @@ Use these two scripts in same directory where you have CSV files from Production
 * production_crops_all_process.py
 * production_crops_normalized_all_process.py
 
+## FAO trade indices
+This script reads raw data and produces two output files containing parsed and normalized datasets.
+* trade_indices_all_process.py
+
+## FAO population
+This script reads raw data and produces two output files containing parsed and normalized datasets.
+* population_all_process.py
+

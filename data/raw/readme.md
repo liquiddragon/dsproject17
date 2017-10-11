@@ -5,3 +5,5 @@
 * Total_Electricity_Net_Consumption.csv - https://www.eia.gov/beta/international/data/browser/#/?pa=0000002&c=ruvvvvvfvtvnvv1urvvvvfvvvvvvfvvvou20evvvvvvvvvnnvuvs&ct=0&ug=8&tl_id=2-A&vs=INTL.2-2-AFG-BKWH.A&ord=CR&cy=1981&vo=0&v=H&end=2014
 * Production_Crops_E_All_Data.zip and Production_Crops_E_All_Data_(Normalized).zip - http://www.fao.org/faostat/en/#data/QC
 * Total Primary Energy Production.csv - https://www.eia.gov/beta/international/data/browser/#/?c=ruvvvvvfvtvnvv1vrvvvvfvvvvvvfvvvou20evvvvvvvvvvvvuvs&ct=0&vs=INTL.44-1-AFG-QBTU.A&vo=0&v=H&end=2014
+* Trade_Indices_E_All_Data.zip: http://www.fao.org/faostat/en/#data/TI
+* Population_E_All_Data.zip: http://www.fao.org/faostat/en/#data/OA
