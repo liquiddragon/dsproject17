@@ -1,0 +1,7 @@
+.DS_Store
+.gitignore.swp
+.idea/
+data/.DS_Store
+data/raw/worldbank/.DS_Store
+data/tools/__pycache__/
+playground/
