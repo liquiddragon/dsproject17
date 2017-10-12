@@ -52,13 +52,15 @@ def worldbank_import(source, skiprows, drop1, drop2, output, normalize=False):
     # get rid of extra trailing rows
     if drop2:
         df = df.drop(df.index[drop2:])
-        df.to_csv('../processed/' + output + '.csv')
 
     # get rid of columns we don't want
     for name in exclude_list:
         del df[name]
 
-    # generate normalized file if wanted:
+    # write regular csv
+    df.to_csv('../processed/' + output + '.csv')
+
+    # write normalized file if wanted:
     if normalize:
         normdf = df.loc[:, df.columns != 'World'].div(df['World'].values, axis=0)
         normdf.to_csv('../processed/' + output + '_normalized.csv')
