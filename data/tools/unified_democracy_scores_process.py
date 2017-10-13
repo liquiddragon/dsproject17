@@ -137,6 +137,6 @@ df = df.add(5)
 df.to_csv('../processed/democracy_scores.csv')
 
 # normalize by world averages:
-df_norm = df.loc[:, df.columns != 'World'].div(df['World'].values+5, axis=0) #divide all values by the world values
+df_norm = df.loc[:, df.columns != 'World'].div(df['World'].values, axis=0) #divide all values by the world values
 
 df_norm.to_csv('../processed/democracy_scores_normalized.csv')
