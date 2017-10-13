@@ -35,3 +35,43 @@ There are quite a few so decided it was simpler to just refer to the source file
   * population_estimates_and_projections.csv
   * population_estimates_and_projections_normalized.csv
 
+
+## Sample of Our World In Data offerings
+
+* Source: https://ourworldindata.org
+* Raw:
+  * annual-co-emissions-per-country.csv
+  * co-emissions-per-capita-vs-gdp-per-capita-international-.csv
+  * daily-per-capita-fat-supply.csv
+  * daily-per-capita-protein-supply.csv
+  * daily-per-capita-supply-of-calories.csv
+  * historical-gov-spending-gdp.csv
+  * mean-years-of-schooling-selected-countries.csv
+  * military-expenditure-as-share-of-gdp.csv
+  * primary-enrollment-selected-countries.csv
+  * share-of-a-countrys-population-that-is-not-born-within-the-country.csv
+  * trade-as-share-of-gdp.csv
+* Processed:
+  * annual_co_emissions_per_country.csv
+  * annual_co_emissions_per_country_normalized.csv
+  * co_emissions_per_capita_international.csv
+  * co_emissions_per_capita_international_normalized.csv
+  * daily_per_capita_fat_supply.csv
+  * daily_per_capita_fat_supply_normalized.csv
+  * daily_per_capita_protein_supply.csv
+  * daily_per_capita_protein_supply_normalized.csv
+  * daily_per_capita_supply_of_calories.csv
+  * daily_per_capita_supply_of_calories_normalized.csv
+  * historical_gov_spending_gdp.csv
+  * historical_gov_spending_gdp_normalized.csv
+  * mean_years_of_schooling_selected_countries.csv
+  * mean_years_of_schooling_selected_countries_normalized.csv
+  * military_expenditure_as_share_of_gdp.csv
+  * military_expenditure_as_share_of_gdp_normalized.csv
+  * primary_enrollment_selected_countries.csv
+  * primary_enrollment_selected_countries_normalized.csv
+  * share_of_a_countrys_population_that_is_not_born_within_the_country.csv
+  * share_of_a_countrys_population_that_is_not_born_within_the_country_normalized.csv
+  * trade_as_share_of_gdp.csv
+  * trade_as_share_of_gdp_normalized.csv
+

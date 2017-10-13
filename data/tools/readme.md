@@ -15,3 +15,8 @@ This script reads raw data and produces two output files containing parsed and n
 This script reads raw data and produces two output files containing parsed and normalized datasets.
 * population_all_process.py
 
+## Out world in data
+This script reads different raw data and produces two output files containing parsed and normalized datasets.
+* our_world_in_data_process.py
+
+It expects following command line parameters: "input file name" "country name index" "year index" "value index" "-p as optional parameter for percentage values" "output file name"

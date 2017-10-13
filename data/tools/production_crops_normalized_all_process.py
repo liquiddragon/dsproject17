@@ -59,30 +59,15 @@ with open('Production_Crops_E_All_Data_(Normalized).csv', 'r', newline='', encod
             value = strToFloat(row[9])
             items[row[3]][row[5]][row[1]][year] = value
 
-#print(items['Wheat'])
-#print()
-#print(items['Wheat']['Area harvested'])
-#print()
-#print(items['Wheat']['Area harvested']['Afghanistan'])
-#print()
-#print(items['Wheat']['Area harvested']['Afghanistan'][2014])
-
 print('Writing...')
 index_labels = []
 for i in range(start_year, end_year + 1):
     index_labels.append(i)
 
-#count = 0
 for item in items:
-    #print(item)
     for element in items[item]:
-        # if count > 0: break
-        # count += 1
-        #print('  ' + element)
         df = pd.DataFrame(index=index_labels)
         for country in items[item][element]:
-            #print('    ' + country)
             for year,value in items[item][element][country].items():
                 df.at[year, country] = value
-            #print('      ' + str(year) + ' = ' + str(value))
         df.to_csv(get_filename(item, element))
