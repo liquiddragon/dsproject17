@@ -1,5 +1,6 @@
 import csv
 import pandas as pd
+import numpy as np
 
 extra_columns = ['Net Food Importing Developing Countries','South America',
     'Low Income Food Deficit Countries','Caribbean','World','Southern Europe','Middle Africa',
@@ -66,7 +67,9 @@ for i in range(start_year, end_year + 1):
 # Create dataframe with all information combined and store it
 df = pd.DataFrame()
 for country in items:
-    df[country] = items[country]
+    add_list = [x if x != -1 else np.nan for x in items[country]]
+    df[country] = add_list
+
 df.index = index_labels
 df.to_csv('population_estimates_and_projections.csv')
 

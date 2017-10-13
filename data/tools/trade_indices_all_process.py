@@ -1,5 +1,6 @@
 import csv
 import pandas as pd
+import numpy as np
 import string
 
 extra_country_columns = ['Net Food Importing Developing Countries','South America',
@@ -87,7 +88,8 @@ for item in items:
     for element in items[item]:
         df = pd.DataFrame()
         for country in items[item][element]:
-            df[country] = items[item][element][country]
+            add_list = [x if x != -1 else np.nan for x in items[item][element][country]]
+            df[country] = add_list
         df.index = index_labels
         df.to_csv(get_filename(item, element, False))
 
