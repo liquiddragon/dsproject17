@@ -4,8 +4,49 @@ Please always add the source you used to this file for any data you download
 
 ## World Bank data:
 
-tools/add world_bank_all_process.py lists all sources and corresponding names
-There are quite a few so decided it was simpler to just refer to the source file
+* Source: https://data.worldbank.org/
+* Raw: data/worldbank
+* Processed:
+  * imports_of_goods_and_services_percentage_of_gdp.csv
+  * imports_of_goods_and_services_percentage_of_gdp_normalized.csv
+  * age_dependency_ratio.csv
+  * age_dependency_ratio_normalized.csv
+  * ages_65_and_older_percentage.csv
+  * ages_65_and_older_percentage_normalized.csv
+  * fertility_rate.csv
+  * fertility_rate_normalized.csv
+  * gross_capital_formation.csv
+  * gross_capital_formation_normalized.csv
+  * infant_mortality_per_1000.csv
+  * infant_mortality_per_1000_normalized.csv
+  * net_migration.csv
+  * young_pregnancies.csv
+  * young_pregnancies_normalized.csv
+  * births_per_1000.csv
+  * births_per_1000_normalized.csv
+  * deaths_per_1000.csv
+  * deaths_per_1000_normalized.csv
+  * life_expectancy.csv
+  * life_expectancy_female.csv
+  * life_expectancy_female_normalized.csv
+  * life_expectancy_male.csv
+  * life_expectancy_male_normalized.csv
+  * life_expectancy_normalized.csv
+  * rural_population_percentage.csv
+  * rural_population_percentage_normalized.csv
+  * exports_of_goods_and_services_percentage_of_gdp.csv
+  * exports_of_goods_and_services_percentage_of_gdp_normalized.csv
+  * gdp_per_capita_current_usd.csv
+  * gdp_per_capita_current_usd_normalized.csv
+  * surface_area_sq_km.csv
+
+## Democracy Scores
+
+* Source: http://www.unified-democracy-scores.org/uds.html
+* Raw: data/unified_democracy_scores
+* Processed:
+  * democracy_scores.csv
+  * democracy_scores_normalized.csv
 
 ## Different crops
 
