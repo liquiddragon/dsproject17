@@ -113,7 +113,7 @@ def replace_country_names(df):
 
     #replace country names to be the same across all data sets
     for k, v in replace_names.items():
-        df.rename(columns={k: v}, inplace=True)
+        _df.rename(columns={k: v}, inplace=True)
 
     #remove countries we don't want to analyze
     for name in exclude_countries:
