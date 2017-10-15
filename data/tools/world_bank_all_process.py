@@ -1,35 +1,46 @@
 import pandas as pd
 
 # columns to remove:
-exclude_list = ['Aruba', 'Andorra', 'Arab World', 'Bahamas, The',
-                'Central Europe and the Baltics', 'Channel Islands', 'Comoros',
-                'Cabo Verde', 'Caribbean small states', 'Curacao', 'Cayman Islands',
-                'East Asia & Pacific (excluding high income)', 'Early-demographic dividend',
-                'East Asia & Pacific', 'Europe & Central Asia (excluding high income)',
-                'Europe & Central Asia', 'Euro area', 'European Union',
-                'Fragile and conflict affected situations', 'Faroe Islands',
-                'Micronesia, Fed. Sts.', 'Gibraltar', 'Greenland', 'High income',
-                'Heavily indebted poor countries (HIPC)', 'IBRD only', 'IDA & IBRD total',
-                'IDA total', 'IDA blend', 'IDA only', 'Isle of Man', 'Not classified',
-                'St. Kitts and Nevis', 'Latin America & Caribbean (excluding high income)',
-                'St. Lucia', 'Latin America & Caribbean',
-                'Least developed countries: UN classification', 'Low income', 'Lower middle income',
-                'Low & middle income', 'Late-demographic dividend', 'St. Martin (French part)',
-                'Middle East & North Africa', 'Marshall Islands', 'Middle income',
-                'Middle East & North Africa (excluding high income)', 'Northern Mariana Islands',
-                'North America', 'New Caledonia', 'Nauru', 'OECD members', 'Other small states',
-                'Palau', 'Pre-demographic dividend', 'Pacific island small states',
-                'Post-demographic dividend', 'French Polynesia', 'Solomon Islands', 'San Marino',
-                'Sub-Saharan Africa (excluding high income)', 'Sub-Saharan Africa', 'Small states',
-                'Sao Tome and Principe', 'Sint Maarten (Dutch part)', 'Seychelles',
-                'Turks and Caicos Islands', 'East Asia & Pacific (IDA & IBRD countries)',
-                'Europe & Central Asia (IDA & IBRD countries)',
-                'Latin America & the Caribbean (IDA & IBRD countries)',
-                'Middle East & North Africa (IDA & IBRD countries)', 'South Asia (IDA & IBRD)',
-                'Sub-Saharan Africa (IDA & IBRD countries)', 'Tuvalu', 'Upper middle income',
-                'St. Vincent and the Grenadines', 'British Virgin Islands', 'Virgin Islands (U.S.)',
-                'Vanuatu', 'Samoa', 'Kosovo']
+#some countries which may need to be excluded, but not sure yet:
+#['Bahamas, The', 'Aruba', 'Andorra', 'Channel Islands', 'Comoros',  'Faroe Islands',
+#'Micronesia, Fed. Sts.', 'Gibraltar', 'Greenland',  'Isle of Man', 'St. Kitts and Nevis',
+# 'St. Lucia',  'St. Martin (French part)', 'Palau', 'Marshall Islands', 'French Polynesia',
+# 'Solomon Islands', 'San Marino', 'New Caledonia', 'Nauru', 'Northern Mariana Islands',
+# 'Sao Tome and Principe', 'Sint Maarten (Dutch part)', 'Seychelles', 'Turks and Caicos Islands',
+# 'St. Vincent and the Grenadines', 'British Virgin Islands', 'Virgin Islands (U.S.)', 'Vanuatu',
+# 'Samoa', 'Kosovo', 'Tuvalu', 'Cabo Verde', 'Curacao', 'Cayman Islands',
+exclude_countries = ['Palau', 'Monaco', 'Gibraltar', 'Nauru', 'American Samoa',
+        'Saint Helena, Ascension and Tristan da Cunha', 'Dominica',
+        'Montserrat', 'Wallis and Futuna Islands', 'Andorra',
+        'St. Kitts and Nevis', 'Tokelau', 'Cook Islands', 'Isle of Man',
+        'San Marino', 'Northern Mariana Islands', 'Holy See', 'Greenland',
+        'Seychelles', 'Bermuda', 'Cayman Islands', 'Saint Pierre and Miquelon',
+        'Anguilla', 'Antigua and Barbuda', 'Falkland Islands (Malvinas)',
+        'Turks and Caicos Islands', 'Niue', 'Tuvalu', 'Faroe Islands',
+        'Marshall Islands', 'Kiribati', 'British Virgin Islands',
+        'Liechtenstein']
 
+exclude_groups = [ 'Arab World', 'Central Europe and the Baltics', 'Caribbean small states',
+        'East Asia & Pacific (excluding high income)', 'Early-demographic dividend',
+        'East Asia & Pacific', 'Europe & Central Asia (excluding high income)',
+        'Europe & Central Asia', 'Euro area', 'European Union',
+        'Fragile and conflict affected situations', 'High income',
+        'Heavily indebted poor countries (HIPC)', 'IBRD only', 'IDA & IBRD total',
+        'IDA total', 'IDA blend', 'IDA only', 'Not classified',
+        'Latin America & Caribbean (excluding high income)',
+        'Latin America & Caribbean', 'Least developed countries: UN classification',
+        'Low income', 'Lower middle income', 'Low & middle income', 'Late-demographic dividend',
+        'Middle East & North Africa',  'Middle income',
+        'Middle East & North Africa (excluding high income)',
+        'North America', 'OECD members', 'Other small states',
+        'Pre-demographic dividend', 'Pacific island small states',
+        'Post-demographic dividend', 'Sub-Saharan Africa (excluding high income)',
+        'Sub-Saharan Africa', 'Small states', 'South Asia',
+        'East Asia & Pacific (IDA & IBRD countries)',
+        'Europe & Central Asia (IDA & IBRD countries)',
+        'Latin America & the Caribbean (IDA & IBRD countries)',
+        'Middle East & North Africa (IDA & IBRD countries)', 'South Asia (IDA & IBRD)',
+        'Sub-Saharan Africa (IDA & IBRD countries)',  'Upper middle income']
 
 # process worldbank data
 # source: path to raw data
@@ -54,8 +65,11 @@ def worldbank_import(source, skiprows, drop1, drop2, output, normalize=False):
         df = df.drop(df.index[drop2:])
 
     # get rid of columns we don't want
-    for name in exclude_list:
-        del df[name]
+    for name in exclude_countries + exclude_groups :
+        try :
+            del df[name]
+        except KeyError:
+            print("Column %s not in this dataframe" % name)
 
     # write regular csv
     df.to_csv('../processed/' + output + '.csv')
