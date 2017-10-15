@@ -108,7 +108,7 @@ replace_names = {'Germany West': 'Germany',
                 'Virgin Islands, USA': 'Virgin Islands (U.S.)'
                  }
 
-def replace_country_names(df):
+def replace_country_names(df, verbose=False):
     _df = df.copy()
 
     #replace country names to be the same across all data sets
@@ -120,6 +120,7 @@ def replace_country_names(df):
         try:
             del _df[name]
         except KeyError:
-            # print("Column %s not in this dataframe" % name)
+            if verbose :
+                print("Column %s not in this dataframe" % name)
             continue
     return _df
