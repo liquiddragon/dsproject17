@@ -20,3 +20,20 @@ This script reads different raw data and produces two output files containing pa
 * our_world_in_data_process.py
 
 It expects following command line parameters: "input file name" "country name index" "year index" "value index" "-p as optional parameter for percentage values" "output file name"
+
+## World Bank
+This scripts reads all World Bank data from the specified directories and outputs processed CSVs.
+* world_bank_all_process.py
+
+## Democracy Scores
+Reads and normalizes Democracy scores, by using population data from FAO
+* unified_democracy_scores_process.py
+
+## Country name replacement script
+Replaces country names in data frame columns to match those used by World Bank data set.  
+Usage:  
+
+import replacements  
+new_df = replacements.replace_country_names(old_df)  
+
+* replacements.py 
