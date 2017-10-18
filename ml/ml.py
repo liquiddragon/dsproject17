@@ -4,9 +4,9 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import ExtraTreesRegressor
 import matplotlib.pyplot as plt
 
-"""initial testing"""
-
-df = pd.read_csv("dsproject17/ml/training/data.csv")
+path = "dsproject17/ml/"
+df = pd.read_csv(path + "training/data.csv")
+features = df.columns.values[1:-1]
 
 # target
 y = df.gdp_in_15_years
@@ -34,7 +34,7 @@ X_train, X_test, y_train, y_test = \
     train_test_split(df, y, test_size=0.2)
 
 # apply extra tree regressor
-etr = ExtraTreesRegressor(n_estimators=40)
+etr = ExtraTreesRegressor(n_estimators=60, max_features="log2")
 etr.fit(X_train, y_train)
 print(etr.score(X_test, y_test))
 
@@ -46,3 +46,11 @@ plt.plot(x, res, alpha=0.5, label="Predictions")
 plt.legend(loc='upper right')
 plt.show()
 
+# feature importances
+fi = etr.feature_importances_
+
+# features ordered by importance
+fio = np.column_stack((features[np.argsort(fi)[::-1]], np.sort(fi)[::-1]))
+fdf = pd.DataFrame(fio)
+fdf.columns = ["feature", "importance"]
+fdf.to_csv(path + "feature_importances.csv")
