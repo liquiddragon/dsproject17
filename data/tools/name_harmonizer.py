@@ -118,7 +118,7 @@ for filename in file_list:
     print('Processing ' + sfilename)
 
     # Read CSV file, remove duplicate columns and extract only column names
-    df = pd.read_csv(filename)
+    df = pd.read_csv(filename, index_col=0)
     df = df.T.drop_duplicates().T
     df_countries_list = df.columns.values
     df_countries_list.sort()
