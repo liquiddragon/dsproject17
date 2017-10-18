@@ -36,4 +36,10 @@ Usage:
 import replacements  
 new_df = replacements.replace_country_names(old_df)  
 
-* replacements.py 
+* replacements.py
+
+## Name harmonizer
+Use this to harmonize column names on CSV files. You will need Python library called 'fuzzywuzzy' with preferably its speedup version. In addition list of country names, such as included countries.csv here, is required. You may modify file inclusion and exclusion lists by modifying script code itself.
+* name_harmonizer.py
+* countries.csv
+
