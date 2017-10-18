@@ -18,6 +18,7 @@ import replacements
 
 
 raw_features = [
+    # [feature/file name, add to learning data (yes/no), number of lags (how many previous years to include)]
     ['age_dependency_ratio_normalized', True, 1 ],
     ['age_dependency_ratio', False, 1],
     ['age_dependency_ratio_normalized', True, 1],
@@ -66,7 +67,7 @@ raw_features = [
     ['life_expectancy_male_normalized', True, 1],
     ['life_expectancy_normalized', True, 1],
     ['mean_years_of_schooling_selected_countries', False, 1],
-    ['mean_years_of_schooling_selected_countries_normalized', True, 1],
+    ['mean_years_of_schooling_selected_countries_normalized', False, 1],
     ['military_expenditure_as_share_of_gdp', False, 1],
     ['military_expenditure_as_share_of_gdp_normalized', True, 1],
     #['net_migration', True, 1], Need to normalize!
@@ -131,11 +132,13 @@ df_for_ml = pd.DataFrame(index=indices, columns=columns)
 for i in df_for_ml.index.values:
     country, year = i.split(' : ')
     year = int(year)
+    #populate feature columns
     for c in df_for_ml.columns.values:
         try:
             df_for_ml.loc[i][c] = feature_data[c].loc[year][country]
         except (KeyError, IndexError) as e:
             continue
+    #populate label column (GDP data 15 years later)
     try :
         df_for_ml.loc[i]['gdp_in_15_years'] = label_data.loc[year + 15][country] / label_data.loc[int(year)][country]
     except (KeyError, IndexError) as e:
