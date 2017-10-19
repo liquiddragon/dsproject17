@@ -74,7 +74,7 @@ raw_features = [
     ['population_estimates_and_projections', False, 1],
     ['population_estimates_and_projections_normalized', True, 1],
     ['primary_enrollment_selected_countries', False, 1],
-    ['primary_enrollment_selected_countries_normalized', True, 1],
+    ['primary_enrollment_selected_countries_normalized', False, 1],
     ['pupil-teacher_ratio_processed', True, 1],
     ['rural_population_percentage', False, 1],
     ['rural_population_percentage_normalized', True, 1],
@@ -119,7 +119,7 @@ for f in feature_data :
 country_names_set = set.intersection(*country_sets)
 
 # create new dataframe that will contain features and labels for training
-years = list(range(1970, 2001))
+years = list(range(1961, 2001))
 #for the first try we just go with the list of names in the label data.
 countries = label_data.columns #use world bank country list for now
 indices = [ country + ' : ' + str(year) for country in countries for year in years  ]
@@ -146,3 +146,35 @@ for i in df_for_ml.index.values:
 
 #save data to CSV
 df_for_ml.to_csv('./training/data.csv')
+
+##############################################
+# Create another dataframe for recent years:
+##############################################
+
+years2 = list(range(2001, 2016))
+# for the first try we just go with the list of names in the label data.
+countries = label_data.columns #use world bank country list for now
+indices2 = [country + ' : ' + str(year) for country in countries for year in years2]
+
+columns2 = feature_columns + ['gdp_per_capita']
+
+df_recent = pd.DataFrame(index=indices2, columns=columns2)
+
+# populate data frame:
+for i in df_recent.index.values:
+    country, year = i.split(' : ')
+    year = int(year)
+    # populate feature columns
+    for c in df_recent.columns.values:
+        try:
+            df_recent.loc[i][c] = feature_data[c].loc[year][country]
+        except (KeyError, IndexError) as e:
+            continue
+    # populate label column with current GDP
+    try:
+        df_recent.loc[i]['gdp_per_capita'] = label_data.loc[int(year)][country]
+    except (KeyError, IndexError) as e:
+        continue
+
+# save data to CSV
+df_recent.to_csv('./training/data_up_till_now.csv')
