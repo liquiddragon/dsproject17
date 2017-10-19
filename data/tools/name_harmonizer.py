@@ -110,6 +110,7 @@ file_list = glob.glob(data_files_path + '/*normalized*')
 file_list.append(data_files_path + '/surface_area_sq_km.csv')
 file_list.append(data_files_path + '/pupil-teacher_ratio_processed.csv')
 file_list.append(data_files_path + '/net_migration.csv')
+file_list.append(data_files_path + '/gdp_per_capita_current_usd.csv')
 # Finally eliminate files containing word 'selected'
 file_list = [entry for entry in file_list if entry.find('selected') < 0]
 
