@@ -52,9 +52,10 @@ for i in range(len(names)):
 data = np.asarray(data)
 data = np.nan_to_num(data[:, 1:].astype(float))
 predictions = etr.predict(data)
-res = pd.DataFrame(predictions)
-res["labels"] = np.asarray(names)
-res.to_csv(path + "/presentation/predictions.csv")
+unique_names = pd.unique(np.asarray([n[:-7] for n in names]))
+t = predictions.reshape(15, len(unique_names), order="F")
+data = pd.DataFrame(data=t, index=np.arange(2016, 2031), columns=unique_names)
+data.to_csv(path + "/presentation/predictions.csv")
 
 # visualize test accuracy
 res = etr.predict(X_test)
