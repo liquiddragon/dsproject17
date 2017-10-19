@@ -122,7 +122,6 @@ for filename in file_list:
     df = pd.read_csv(filename, index_col=0)
     df = df.T.drop_duplicates().T
     df_countries_list = df.columns.values
-    df_countries_list.sort()
 
     # Create mapping table from old name (as key) to new name (as value)
     mappings = {}
@@ -168,5 +167,5 @@ for filename in file_list:
             del df[k]
 
     # Write new column names in place and write dataframe to file
-    df.columns=list(mappings.values())
+    df.rename(columns=mappings)
     df.to_csv('output/' + sfilename + '_nh.csv')
