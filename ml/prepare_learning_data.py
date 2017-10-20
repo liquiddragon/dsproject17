@@ -11,96 +11,93 @@ after the data point.
 import pandas as pd
 import sys
 import os
-# Do path magic in order to import replacements stuff
-dir_path = os.path.dirname(os.path.realpath(__file__))
-sys.path.insert(0, '../data/tools')
-import replacements
 
 
 raw_features = [
     # [feature/file name, add to learning data (yes/no), number of lags (how many previous years to include)]
-    ['age_dependency_ratio_normalized', True, 1 ],
     ['age_dependency_ratio', False, 1],
-    ['age_dependency_ratio_normalized', True, 1],
+    ['age_dependency_ratio_normalized', True, 3],
     ['ages_65_and_older_percentage', False, 1],
     ['ages_65_and_older_percentage_normalized', True, 1],
     ['agricultproductstotal-export_value_base_price', False, 1],
-    ['agricultproductstotal-export_value_base_price_normalized', True, 1],
+    ['agricultproductstotal-export_value_base_price_normalized', True, 3],
     ['agricultproductstotal-import_value_base_period_price', False, 1],
-    ['agricultproductstotal-import_value_base_period_price_normalized', True, 1],
+    ['agricultproductstotal-import_value_base_period_price_normalized', True, 3],
     ['annual_co_emissions_per_country', False, 1],
-    ['annual_co_emissions_per_country_normalized', True, 1],
+    ['annual_co_emissions_per_country_normalized', True, 3],
     ['births_per_1000', False, 1],
-    ['births_per_1000_normalized', True, 1],
+    ['births_per_1000_normalized', True, 3],
     ['co_emissions_per_capita_international', False, 1],
-    ['co_emissions_per_capita_international_normalized', True, 1],
+    ['co_emissions_per_capita_international_normalized', True, 3],
     ['daily_per_capita_fat_supply', False, 1],
-    ['daily_per_capita_fat_supply_normalized', True, 1],
+    ['daily_per_capita_fat_supply_normalized', True, 3],
     ['daily_per_capita_protein_supply', False, 1],
-    ['daily_per_capita_protein_supply_normalized', True, 1],
+    ['daily_per_capita_protein_supply_normalized', True, 3],
     ['daily_per_capita_supply_of_calories', False, 1],
-    ['daily_per_capita_supply_of_calories_normalized', True, 1],
+    ['daily_per_capita_supply_of_calories_normalized', True, 3],
     ['deaths_per_1000', False, 1],
     ['deaths_per_1000_normalized', True, 1],
     ['democracy_scores', False, 1],
-    ['democracy_scores_normalized', True, 1],
+    ['democracy_scores_normalized', True, 3],
     ['exports_of_goods_and_services_percentage_of_gdp', False, 1],
-    ['exports_of_goods_and_services_percentage_of_gdp_normalized', True, 1],
+    ['exports_of_goods_and_services_percentage_of_gdp_normalized', True, 3],
     ['fertility_rate', False, 1],
-    ['fertility_rate_normalized', True, 1],
+    ['fertility_rate_normalized', True, 3],
     ['food_excl_fish-export_value_base_price', False, 1],
-    ['food_excl_fish-export_value_base_price_normalized', True, 1],
+    ['food_excl_fish-export_value_base_price_normalized', True, 3],
     ['food_excl_fish-import_value_base_period_price', False, 1],
-    ['food_excl_fish-import_value_base_period_price_normalized', True, 1],
+    ['food_excl_fish-import_value_base_period_price_normalized', True, 3],
     ['gross_capital_formation', False, 1],
-    ['gross_capital_formation_normalized', True, 1],
+    ['gross_capital_formation_normalized', True, 3],
     ['historical_gov_spending_gdp', False, 1],
-    ['historical_gov_spending_gdp_normalized', True, 1],
+    ['historical_gov_spending_gdp_normalized', True, 3],
     ['imports_of_goods_and_services_percentage_of_gdp', False, 1],
-    ['imports_of_goods_and_services_percentage_of_gdp_normalized', True, 1],
+    ['imports_of_goods_and_services_percentage_of_gdp_normalized', True, 3],
     ['infant_mortality_per_1000', False, 1],
-    ['infant_mortality_per_1000_normalized', True, 1],
+    ['infant_mortality_per_1000_normalized', True, 3],
     ['life_expectancy', False, 1],
     ['life_expectancy_female', False, 1],
-    ['life_expectancy_female_normalized', True, 1],
+    ['life_expectancy_female_normalized', True, 3],
     ['life_expectancy_male', False, 1],
-    ['life_expectancy_male_normalized', True, 1],
-    ['life_expectancy_normalized', True, 1],
+    ['life_expectancy_male_normalized', True, 3],
+    ['life_expectancy_normalized', True, 3],
     ['mean_years_of_schooling_selected_countries', False, 1],
     ['mean_years_of_schooling_selected_countries_normalized', False, 1],
     ['military_expenditure_as_share_of_gdp', False, 1],
-    ['military_expenditure_as_share_of_gdp_normalized', True, 1],
+    ['military_expenditure_as_share_of_gdp_normalized', True, 3],
     #['net_migration', True, 1], Need to normalize!
     ['population_estimates_and_projections', False, 1],
-    ['population_estimates_and_projections_normalized', True, 1],
+    ['population_estimates_and_projections_normalized', True, 3],
     ['primary_enrollment_selected_countries', False, 1],
     ['primary_enrollment_selected_countries_normalized', False, 1],
-    ['pupil-teacher_ratio_processed', True, 1],
+    ['pupil-teacher_ratio_processed', True, 3],
     ['rural_population_percentage', False, 1],
-    ['rural_population_percentage_normalized', True, 1],
+    ['rural_population_percentage_normalized', True, 3],
     ['share_of_a_countrys_population_that_is_not_born_within_the_country', False, 1],
-    ['share_of_a_countrys_population_that_is_not_born_within_the_country_normalized', True, 1],
+    ['share_of_a_countrys_population_that_is_not_born_within_the_country_normalized', True, 3],
     ['surface_area_sq_km', True, 1],
     ['trade_as_share_of_gdp', False, 1],
-    ['trade_as_share_of_gdp_normalized', True, 1],
+    ['trade_as_share_of_gdp_normalized', True, 3],
     ['young_pregnancies', False, 1],
-    ['young_pregnancies_normalized', True, 1]
+    ['young_pregnancies_normalized', True, 3]
 ]
 
-raw_labels = 'gdp_per_capita_current_usd.csv'
+raw_labels = 'gdp_per_capita_current_usd_nh_ip.csv'
 # ['gdp_per_capita_current_usd.csv', False, 1],
 # ['gdp_per_capita_current_usd_normalized.csv', True, 1],
 
-processed_path = '../data/processed/'
+processed_path = 'data/processed/interpolated/'
 
 feature_columns = [entry[0] for entry in raw_features if entry[1]]
 
 # load the needed features into a collection of data frames
 feature_data = {}
+# store lag data per country
+lag_data = {key: value for (key, value) in [(entry[0], entry[2]) for entry in raw_features if entry[1]]}
+
 
 for c in feature_columns :
-    raw_df = pd.read_csv(processed_path + c +'.csv', index_col=0)
-    feature_data[c] = replacements.replace_country_names(raw_df)
+    feature_data[c] = pd.read_csv(processed_path + c +'_nh_ip.csv', index_col=0)
 
 label_data = pd.read_csv(processed_path + raw_labels, index_col=0)
 
@@ -145,7 +142,7 @@ for i in df_for_ml.index.values:
         continue
 
 #save data to CSV
-df_for_ml.to_csv('./training/data.csv')
+df_for_ml.to_csv('ml/training/data_interpolated.csv')
 
 ##############################################
 # Create another dataframe for recent years:
@@ -177,4 +174,4 @@ for i in df_recent.index.values:
         continue
 
 # save data to CSV
-df_recent.to_csv('./training/data_up_till_now.csv')
+df_recent.to_csv('ml/training/data_up_till_now_interpolated.csv')
