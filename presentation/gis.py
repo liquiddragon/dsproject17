@@ -35,8 +35,20 @@ for t in missing:
 df2 = df.drop("Unnamed: 0", axis=1)
 df2 = df2[world.name]
 
-world['gdp_per_cap'] = np.asarray(df2.loc[0])
-world.plot(column='gdp_per_cap')
-plt.show()
 
+plt.ioff()
+for i in range(15):
+    fig, ax = plt.subplots()
+    ax.set_title("{0}".format(2016 + i))
+    plt.axis("off")
+    world['gdp_per_cap'] = np.asarray(df2.loc[i])
+    vmin, vmax = 0, 7
+    t = world.plot(ax=ax, column='gdp_per_cap', scheme='quantiles', vmin=vmin, vmax=vmax, cmap="cool")
+
+    fig = t.get_figure()
+    cax = fig.add_axes([0.9, 0.1, 0.03, 0.8])
+    sm = plt.cm.ScalarMappable(cmap='cool', norm=plt.Normalize(vmin=vmin, vmax=vmax))
+    sm._A = []
+    fig.colorbar(sm, cax=cax)
+    plt.savefig("dsproject17/presentation/images/{0}.png".format(i))
 
