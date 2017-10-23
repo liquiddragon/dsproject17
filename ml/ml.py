@@ -4,11 +4,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import ExtraTreesRegressor
 import matplotlib.pyplot as plt
 
-path = "dsproject17/"
-df = pd.read_csv(path + "ml/training/data.csv")
+df = pd.read_csv("dsproject17/ml/training/data_interpolated.csv")
 features = df.columns.values[1:-1]
-# remove "primary enrollment ..." column
-df.drop("primary_enrollment_selected_countries_normalized", axis=1, inplace=True)
 
 # target
 y = df.gdp_in_15_years
@@ -30,16 +27,16 @@ y = np.nan_to_num(y.astype(float))
 
 # training & test sets
 X_train, X_test, y_train, y_test = \
-    train_test_split(df, y, test_size=0.2)
+    train_test_split(df, y, test_size=0.2, random_state=123)
 
 # apply extra tree regressor
-etr = ExtraTreesRegressor(n_estimators=60, max_features="log2")
+etr = ExtraTreesRegressor(n_estimators=60, max_features="log2", random_state=1234)
 etr.fit(X_train, y_train)
 print(etr.score(X_test, y_test))
 
 # predict future gdps
 # load new data
-data = pd.read_csv("dsproject17/ml/training/data_up_till_now.csv")
+data = pd.read_csv("dsproject17/ml/training/data_up_till_now_interpolated.csv")
 data.drop("gdp_per_capita", axis=1, inplace=True)
 
 # correct year numbering
@@ -51,11 +48,13 @@ for i in range(len(names)):
 # save results
 data = np.asarray(data)
 data = np.nan_to_num(data[:, 1:].astype(float))
+etr.set_params(warm_start=True, n_estimators=72)
+etr.fit(df, y)
 predictions = etr.predict(data)
 unique_names = pd.unique(np.asarray([n[:-7] for n in names]))
 t = predictions.reshape(15, len(unique_names), order="F")
 data = pd.DataFrame(data=t, index=np.arange(2016, 2031), columns=unique_names)
-data.to_csv(path + "/presentation/predictions.csv")
+data.to_csv("dsproject17/presentation/predictions.csv")
 
 # visualize test accuracy
 res = etr.predict(X_test)
@@ -72,4 +71,4 @@ fi = etr.feature_importances_
 fio = np.column_stack((features[np.argsort(fi)[::-1]], np.sort(fi)[::-1]))
 fdf = pd.DataFrame(fio)
 fdf.columns = ["feature", "importance"]
-fdf.to_csv(path + "presentation/feature_importances.csv")
+fdf.to_csv("dsproject17/presentation/feature_importances.csv")
