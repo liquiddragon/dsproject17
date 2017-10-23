@@ -27,10 +27,10 @@ y = np.nan_to_num(y.astype(float))
 
 # training & test sets
 X_train, X_test, y_train, y_test = \
-    train_test_split(df, y, test_size=0.2)
+    train_test_split(df, y, test_size=0.2, random_state=123)
 
 # apply extra tree regressor
-etr = ExtraTreesRegressor(n_estimators=60, max_features="log2")
+etr = ExtraTreesRegressor(n_estimators=60, max_features="log2", random_state=1234)
 etr.fit(X_train, y_train)
 print(etr.score(X_test, y_test))
 
@@ -48,6 +48,8 @@ for i in range(len(names)):
 # save results
 data = np.asarray(data)
 data = np.nan_to_num(data[:, 1:].astype(float))
+etr.set_params(warm_start=True, n_estimators=72)
+etr.fit(df, y)
 predictions = etr.predict(data)
 unique_names = pd.unique(np.asarray([n[:-7] for n in names]))
 t = predictions.reshape(15, len(unique_names), order="F")

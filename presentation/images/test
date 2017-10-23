@@ -1,0 +1,3 @@
+#!/bin/bash
+convert -delay 50 '%d.png[0-14]' -loop 0 animation.gif
+mv animation.gif ..
