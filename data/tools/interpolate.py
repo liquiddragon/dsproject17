@@ -109,8 +109,8 @@ def interpolate_df(df, lim1, lim2, method1, method2, dir1, dir2):
 
 
 # Good parameters found by experiment
-# Pass 1: Akima, 4 steps, both directions
-# Pass 2: Linear, 2 steps, both directions (linear has a negative feature of drawing a horizontal line
+# Pass 1: Akima, 6 steps, both directions
+# Pass 2: Linear, 6 steps, forward only (linear has a negative feature of drawing a horizontal line
 # when doing backwards interpolation :(
 
 # Interpolate!
