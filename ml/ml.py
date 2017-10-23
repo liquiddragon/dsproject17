@@ -3,6 +3,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import ExtraTreesRegressor
 import matplotlib.pyplot as plt
+from treeinterpreter import treeinterpreter
 
 df = pd.read_csv("dsproject17/ml/training/data_interpolated.csv")
 features = df.columns.values[1:-1]
@@ -72,3 +73,16 @@ fio = np.column_stack((features[np.argsort(fi)[::-1]], np.sort(fi)[::-1]))
 fdf = pd.DataFrame(fio)
 fdf.columns = ["feature", "importance"]
 fdf.to_csv("dsproject17/presentation/feature_importances.csv")
+
+# feature contributions
+_, _, con = treeinterpreter.predict(etr, X_test)
+data = pd.DataFrame(data=con, index=np.arange(1115), columns=features)
+data.to_csv("dsproject17/presentation/feature_contributions.csv")
+
+# sums of feature conributions of each feature
+f = np.sum(con, axis=0)
+fio = np.column_stack((features[np.argsort(f)[::-1]], np.sort(f)[::-1]))
+fdf = pd.DataFrame(fio)
+fdf.columns = ["feature", "importance"]
+fdf.to_csv("dsproject17/presentation/feature_contribution_sums.csv")
+
