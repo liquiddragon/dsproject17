@@ -69,3 +69,28 @@ for f in files:
     vmin, vmax = int(np.min(df[df.columns[1]])), int(np.max(df[df.columns[1]]))
     t = world.plot(ax=base, color="r")
     plt.savefig("dsproject17/presentation/{0}.png".format(f[:-3]))
+
+path = "dsproject17/presentation/"
+files = ["bottom_performers_high_income.csv", "bottom_performers_low_income.csv",
+         "top_performers_low_income.csv", "top_performers_high_income.csv"]
+countries = []
+for f in files:
+    df = pd.read_csv(path + f)
+    for c in change:
+        df.replace(c, inplace=True)
+        df = df[~df[df.columns[0]].isin(remove)]
+    countries.append(df)
+plt.ioff()
+world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
+world = world[(world.pop_est > 0) & (world.name != "Antarctica")]
+base = world.plot(color='white', edgecolor='black')
+plt.axis("off")
+###
+colors = ["b", "lightskyblue", "peachpuff", "darkorange"]
+for i in range(len(countries)):
+    c = countries[i]
+    world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
+    world = world[(world.pop_est > 0) & (world.name != "Antarctica")]
+    world = world[world.name.isin(np.asarray(c[c.columns[0]]))]
+    t = world.plot(ax=base, color=colors[i])
+plt.savefig("dsproject17/presentation/all.png")
