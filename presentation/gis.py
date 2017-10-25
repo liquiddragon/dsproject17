@@ -35,7 +35,6 @@ for t in missing:
 df2 = df.drop("Unnamed: 0", axis=1)
 df2 = df2[world.name]
 
-
 plt.ioff()
 for i in range(15):
     fig, ax = plt.subplots()
@@ -52,3 +51,21 @@ for i in range(15):
     fig.colorbar(sm, cax=cax)
     plt.savefig("dsproject17/presentation/images/{0}.png".format(i))
 
+path = "dsproject17/presentation/"
+files = ["bottom_performers_high_income.csv", "bottom_performers_low_income.csv",
+         "top_performers_low_income.csv", "top_performers_high_income.csv"]
+for f in files:
+    df = pd.read_csv(path + f)
+    for c in change:
+        df.replace(c, inplace=True)
+        df = df[~df[df.columns[0]].isin(remove)]
+        #######################################
+    plt.ioff()
+    world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
+    world = world[(world.pop_est > 0) & (world.name != "Antarctica")]
+    base = world.plot(color='white', edgecolor='black')
+    plt.axis("off")
+    world = world[world.name.isin(np.asarray(df[df.columns[0]]))]
+    vmin, vmax = int(np.min(df[df.columns[1]])), int(np.max(df[df.columns[1]]))
+    t = world.plot(ax=base, color="r")
+    plt.savefig("dsproject17/presentation/{0}.png".format(f[:-3]))
