@@ -2,6 +2,7 @@ import geopandas as gpd
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
 
 world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
 world = world[(world.pop_est > 0) & (world.name != "Antarctica")]
@@ -87,10 +88,15 @@ base = world.plot(color='white', edgecolor='black')
 plt.axis("off")
 ###
 colors = ["b", "lightskyblue", "peachpuff", "darkorange"]
+labels = [f[:-4].replace("_", " ").capitalize() for f in files]
 for i in range(len(countries)):
     c = countries[i]
     world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
     world = world[(world.pop_est > 0) & (world.name != "Antarctica")]
     world = world[world.name.isin(np.asarray(c[c.columns[0]]))]
-    t = world.plot(ax=base, color=colors[i])
+    t = world.plot(ax=base, color=colors[i], label=labels[i], legend=True)
+    plt.legend(loc="upper right")
+
+patch = [mpatches.Patch(color=c, label=l) for c, l in zip(colors, labels)]
+plt.legend(handles=patch, bbox_to_anchor=(0., 1.02, 1., .102), loc=3, mode="expand")
 plt.savefig("dsproject17/presentation/all.png")
