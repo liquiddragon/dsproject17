@@ -36,6 +36,7 @@ for t in missing:
 df2 = df.drop("Unnamed: 0", axis=1)
 df2 = df2[world.name]
 
+# gdp images
 plt.ioff()
 for i in range(15):
     fig, ax = plt.subplots()
@@ -52,6 +53,7 @@ for i in range(15):
     fig.colorbar(sm, cax=cax)
     plt.savefig("dsproject17/presentation/images/{0}.png".format(i))
 
+# top/bottom performers separate images
 path = "dsproject17/presentation/"
 files = ["bottom_performers_high_income.csv", "bottom_performers_low_income.csv",
          "top_performers_low_income.csv", "top_performers_high_income.csv"]
@@ -60,7 +62,6 @@ for f in files:
     for c in change:
         df.replace(c, inplace=True)
         df = df[~df[df.columns[0]].isin(remove)]
-        #######################################
     plt.ioff()
     world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
     world = world[(world.pop_est > 0) & (world.name != "Antarctica")]
@@ -71,9 +72,10 @@ for f in files:
     t = world.plot(ax=base, color="r")
     plt.savefig("dsproject17/presentation/{0}.png".format(f[:-3]))
 
+# top/bottom performers
 path = "dsproject17/presentation/"
-files = ["bottom_performers_high_income.csv", "bottom_performers_low_income.csv",
-         "top_performers_low_income.csv", "top_performers_high_income.csv"]
+files = ["top_performers_high_income.csv", "top_performers_low_income.csv",
+         "bottom_performers_high_income.csv", "bottom_performers_low_income.csv"]
 countries = []
 for f in files:
     df = pd.read_csv(path + f)
@@ -86,8 +88,7 @@ world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
 world = world[(world.pop_est > 0) & (world.name != "Antarctica")]
 base = world.plot(color='white', edgecolor='black')
 plt.axis("off")
-###
-colors = ["b", "lightskyblue", "peachpuff", "darkorange"]
+colors = ["darkorange", "peachpuff", "b", "lightskyblue"]
 labels = [f[:-4].replace("_", " ").capitalize() for f in files]
 for i in range(len(countries)):
     c = countries[i]
@@ -98,5 +99,37 @@ for i in range(len(countries)):
     plt.legend(loc="upper right")
 
 patch = [mpatches.Patch(color=c, label=l) for c, l in zip(colors, labels)]
-plt.legend(handles=patch, bbox_to_anchor=(0., 1.02, 1., .102), loc=3, mode="expand")
+plt.legend(handles=patch, bbox_to_anchor=(-0.1, 1.02, 1.1, .102), loc=3, ncol=2, mode="expand")
 plt.savefig("dsproject17/presentation/all.png")
+
+
+# gdp differences between years 2000, 2015
+world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
+world = world[(world.pop_est > 0) & (world.name != "Antarctica")]
+df1 = pd.read_csv("dsproject17/data/processed/gdp_per_capita_current_usd.csv")
+gdp = pd.DataFrame((df1.iloc[55] - df1.iloc[55-15])/df1.iloc[55-15]).transpose()
+for t in remove:
+    gdp.drop(t, axis=1, inplace=True)
+for t in change:
+    gdp.rename(columns=t, inplace=True)
+for t in missing:
+    gdp[t] = np.zeros(1)
+
+gdp = gdp.drop("Unnamed: 0", axis=1)
+gdp = gdp[world.name]
+
+vmax, vmin = int(gdp.iloc[0].max()), int(gdp.iloc[0].min())
+fig, ax = plt.subplots()
+ax.set_title("2015")
+plt.axis("off")
+world['gdp_per_cap'] = np.nan_to_num(np.asarray(gdp.iloc[0]))
+t = world.plot(ax=ax, column='gdp_per_cap', vmin=vmin, vmax=vmax, cmap="cool")
+fig = t.get_figure()
+cax = fig.add_axes([0.9, 0.1, 0.03, 0.8])
+sm = plt.cm.ScalarMappable(cmap='cool', norm=plt.Normalize(vmin=vmin, vmax=vmax))
+sm._A = []
+fig.colorbar(sm, cax=cax)
+plt.savefig("dsproject17/presentation/2015.png")
+
+
+
