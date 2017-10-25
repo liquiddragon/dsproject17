@@ -2,6 +2,7 @@ import geopandas as gpd
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
 
 world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
 world = world[(world.pop_est > 0) & (world.name != "Antarctica")]
@@ -35,7 +36,6 @@ for t in missing:
 df2 = df.drop("Unnamed: 0", axis=1)
 df2 = df2[world.name]
 
-
 plt.ioff()
 for i in range(15):
     fig, ax = plt.subplots()
@@ -52,3 +52,51 @@ for i in range(15):
     fig.colorbar(sm, cax=cax)
     plt.savefig("dsproject17/presentation/images/{0}.png".format(i))
 
+path = "dsproject17/presentation/"
+files = ["bottom_performers_high_income.csv", "bottom_performers_low_income.csv",
+         "top_performers_low_income.csv", "top_performers_high_income.csv"]
+for f in files:
+    df = pd.read_csv(path + f)
+    for c in change:
+        df.replace(c, inplace=True)
+        df = df[~df[df.columns[0]].isin(remove)]
+        #######################################
+    plt.ioff()
+    world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
+    world = world[(world.pop_est > 0) & (world.name != "Antarctica")]
+    base = world.plot(color='white', edgecolor='black')
+    plt.axis("off")
+    world = world[world.name.isin(np.asarray(df[df.columns[0]]))]
+    vmin, vmax = int(np.min(df[df.columns[1]])), int(np.max(df[df.columns[1]]))
+    t = world.plot(ax=base, color="r")
+    plt.savefig("dsproject17/presentation/{0}.png".format(f[:-3]))
+
+path = "dsproject17/presentation/"
+files = ["bottom_performers_high_income.csv", "bottom_performers_low_income.csv",
+         "top_performers_low_income.csv", "top_performers_high_income.csv"]
+countries = []
+for f in files:
+    df = pd.read_csv(path + f)
+    for c in change:
+        df.replace(c, inplace=True)
+        df = df[~df[df.columns[0]].isin(remove)]
+    countries.append(df)
+plt.ioff()
+world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
+world = world[(world.pop_est > 0) & (world.name != "Antarctica")]
+base = world.plot(color='white', edgecolor='black')
+plt.axis("off")
+###
+colors = ["b", "lightskyblue", "peachpuff", "darkorange"]
+labels = [f[:-4].replace("_", " ").capitalize() for f in files]
+for i in range(len(countries)):
+    c = countries[i]
+    world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
+    world = world[(world.pop_est > 0) & (world.name != "Antarctica")]
+    world = world[world.name.isin(np.asarray(c[c.columns[0]]))]
+    t = world.plot(ax=base, color=colors[i], label=labels[i], legend=True)
+    plt.legend(loc="upper right")
+
+patch = [mpatches.Patch(color=c, label=l) for c, l in zip(colors, labels)]
+plt.legend(handles=patch, bbox_to_anchor=(0., 1.02, 1., .102), loc=3, mode="expand")
+plt.savefig("dsproject17/presentation/all.png")
