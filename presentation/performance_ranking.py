@@ -46,11 +46,11 @@ bottom_performers_low_income = low_predictions.sort_values(ascending=False)[-20:
 top_performers_low_income_normalized = low_predictions_normalized.sort_values(ascending=False)[0:20]
 bottom_performers_low_income_normalized = low_predictions_normalized.sort_values(ascending=False)[-20:]
 
-df_top_low = top_performers_low_income.to_frame()
-df_bottom_low = bottom_performers_low_income.to_frame()
+df_top_low = top_performers_low_income.to_frame('Velocity of Growth')
+df_bottom_low = bottom_performers_low_income.to_frame('Velocity of Growth')
 
-df_top_low['normalized'] = top_performers_low_income_normalized
-df_bottom_low['normalized'] = bottom_performers_low_income_normalized
+df_top_low['Normalized'] = top_performers_low_income_normalized
+df_bottom_low['Normalized'] = bottom_performers_low_income_normalized
 
 top_performers_high_income = high_predictions.sort_values(ascending=False)[0:20]
 bottom_performers_high_income = high_predictions.sort_values(ascending=False)[-20:]
@@ -58,11 +58,11 @@ bottom_performers_high_income = high_predictions.sort_values(ascending=False)[-2
 top_performers_high_income_normalized = high_predictions_normalized.sort_values(ascending=False)[0:20]
 bottom_performers_high_income_normalized = high_predictions_normalized.sort_values(ascending=False)[-20:]
 
-df_top_high = top_performers_high_income.to_frame()
-df_bottom_high = bottom_performers_high_income.to_frame()
+df_top_high = top_performers_high_income.to_frame('Velocity of Growth')
+df_bottom_high = bottom_performers_high_income.to_frame('Velocity of Growth')
 
-df_top_high['normalized'] = top_performers_high_income_normalized
-df_bottom_high['normalized'] = bottom_performers_high_income_normalized
+df_top_high['Normalized'] = top_performers_high_income_normalized
+df_bottom_high['Normalized'] = bottom_performers_high_income_normalized
 
 top_performers_low_income.to_csv('presentation/top_performers_low_income.csv')
 bottom_performers_low_income.to_csv('presentation/bottom_performers_low_income.csv')
