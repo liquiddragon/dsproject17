@@ -63,6 +63,7 @@ x = np.arange(len(y_test))
 plt.plot(y_test, alpha=0.5, label="True values")
 plt.plot(x, res, alpha=0.5, label="Predictions")
 plt.legend(loc='upper right')
+plt.savefig("dsproject17/presentation/test_accuracy.png")
 plt.show()
 
 # feature importances
