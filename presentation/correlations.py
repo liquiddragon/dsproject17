@@ -72,8 +72,8 @@ names = [feature_names[:num//2], feature_names[num//2:]]
 
 fig, axs = plt.subplots(nrows=2, sharey=True, figsize=(25,18), dpi=40)
 
-_ = fig.suptitle('Relative Importance of Different Features',
-          **{'family': 'Arial Black', 'size': 30, 'weight': 'bold'})
+_ = fig.suptitle('Effects on GDP growth',
+          **{'family': 'Arial Black', 'size': 40, 'weight': 'bold'})
 
 # Generete feature importances plot
 for i in range(2):
@@ -81,10 +81,10 @@ for i in range(2):
     _ = axs[i].set_xticks(range(len(names[i])))
     _ = axs[i].set_xticklabels(names[i], rotation='vertical')
     _ = axs[i].set_xlim(-1, len(names[i]))
-    _ = axs[i].tick_params(axis='x', labelsize=25)
-    _ = axs[i].tick_params(axis='y', labelsize=25)
+    _ = axs[i].tick_params(axis='x', labelsize=28)
+    _ = axs[i].tick_params(axis='y', labelsize=28)
 
-fig.subplots_adjust(bottom=0.15, top=0.95, hspace=0.7)
+fig.subplots_adjust(bottom=0.15, top=0.95, hspace=0.8)
 
 plt.savefig('presentation/images/importances.png',bbox_inches='tight')
 plt.show()
@@ -92,7 +92,7 @@ plt.show()
 fig, axs = plt.subplots(nrows=2, sharey=True, figsize=(25,18), dpi=40)
 
 _ = fig.suptitle('Feature Correlation to Growth',
-          **{'family': 'Arial Black', 'size': 30, 'weight': 'bold'})
+          **{'family': 'Arial Black', 'size': 40, 'weight': 'bold'})
 
 correlation_values = importances['corr_to_growth'].values
 values = [correlation_values[:num//2], correlation_values[num//2:]]
@@ -103,10 +103,10 @@ for i in range(2):
     _ = axs[i].set_xticks(range(len(names[i])))
     _ = axs[i].set_xticklabels(names[i], rotation='vertical')
     _ = axs[i].set_xlim(-1, len(names[i]))
-    _ = axs[i].tick_params(axis='x', labelsize=25)
-    _ = axs[i].tick_params(axis='y', labelsize=25)
+    _ = axs[i].tick_params(axis='x', labelsize=28)
+    _ = axs[i].tick_params(axis='y', labelsize=28)
 
-fig.subplots_adjust(bottom=0.15, top=0.95, hspace=0.7)
+fig.subplots_adjust(bottom=0.15, top=0.95, hspace=0.8)
 
 plt.savefig('presentation/images/correlations.png',bbox_inches='tight')
 plt.show()
